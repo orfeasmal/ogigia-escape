@@ -6,13 +6,32 @@
 
 #include <raylib.h>
 
-typedef struct {
+// I put it here because I want to do something cool
+typedef enum {
+	MATERIAL_TREE,
+	MATERIAL_PLANT,
+	MATERIAL_COUNT
+} MaterialType;
+
+typedef enum {
+	ENTITY_PLAYER,
+	ENTITY_KALIPSO,
+	ENTITY_MATERIAL
+} EntityType;
+
+typedef struct entity {
 	Rectangle body;
-	Vector2 vel, acc;
+
+	EntityType type;
 	Color color;
+
+	Vector2 vel;
+
+	MaterialType material_type; // for materials
+	uint32_t materials_in_possesion[MATERIAL_COUNT]; // for the player
 } Entity;
 
-void entity_update(Entity *entity, uint32_t width, uint32_t height, float time_step);
+void entity_update(Entity *entity, float time_step);
 void entity_render(const Entity *entity);
 
 #endif // ENTITY_H
