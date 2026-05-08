@@ -8,17 +8,9 @@
 
 int main(void)
 {
-	Entity player = {
-		.body = {
-			.width = 50.0f,
-			.height = 100.0f
-		},
-		.color = BLUE,
-
-		.gravity = true
-	};
-
 	InitWindow(WIDTH, HEIGHT, TITLE);
+
+	Entity player = player_create(WIDTH / 2.0f, HEIGHT / 2.0f);
 
 	while (!WindowShouldClose()) {
 		float time_step = GetFrameTime();
@@ -27,7 +19,7 @@ int main(void)
 		player_update(&player, WIDTH, HEIGHT, time_step);
 
 		// RENDER
-		ClearBackground(WHITE);
+		ClearBackground(GREEN);
 		BeginDrawing();
 		entity_render(&player);
 		EndDrawing();

@@ -10,9 +10,6 @@ typedef struct {
 	Rectangle body;
 	Vector2 vel, acc;
 	Color color;
-
-	bool on_ground;
-	bool gravity;
 } Entity;
 
 void entity_update(Entity *entity, uint32_t width, uint32_t height, float time_step);
