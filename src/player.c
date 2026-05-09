@@ -11,37 +11,36 @@
 
 #define VEL 400.0f
 
-Entity player_create(float x, float y)
+Player player_create(float x, float y)
 {
-	return (Entity) {
+	return (Player) {
 		.body = {
 			.width = PLAYER_WIDTH,
 			.height = PLAYER_HEIGHT,
 			.x = x,
 			.y = y
 		},
-		.type = ENTITY_PLAYER,
-		.color = PLAYER_COLOR
+		.color = PLAYER_COLOR,
 	};
 }
 
-void player_update(Entity *p, Entity *materials, uint32_t *materials_count, float time_step)
+void player_update(Player *p, Plant *plants, uint32_t *plants_count, float time_step)
 {
-	for (uint32_t i = 0; i < *materials_count; ++i) {
-		Entity *material = &materials[i];
+	for (uint32_t i = 0; i < *plants_count; ++i) {
+		Plant *plant = &plants[i];
 
-		float distance_from_material = Vector2Length(
+		float distance_from_plant = Vector2Length(
 			(Vector2) {
-				.x = p->body.x - material->body.x,
-				.y = p->body.y - material->body.y
+				.x = (p->body.x + p->body.width / 2.0f) - (plant->body.x + plant->body.width / 2.0f),
+				.y = (p->body.y + p->body.height / 2.0f) - (plant->body.y + plant->body.height / 2.0f)
 			}
 		);
 
-		if (distance_from_material <= p->body.width * 2.0f) {
+		if (distance_from_plant <= p->body.width * 2.5f) {
 			if (IsKeyPressed(KEY_E)) {
-				++p->materials_in_possesion[material->material_type];
-				materials[i] = materials[--(*materials_count)];
-				printf("%d\n", p->materials_in_possesion[0]);
+				++p->plants_in_possesion[plant->type];
+				plants[i] = plants[--(*plants_count)];
+				printf("%d\n", p->plants_in_possesion[0]);
 			}
 		}
 	}
@@ -54,6 +53,9 @@ void player_update(Entity *p, Entity *materials, uint32_t *materials_count, floa
 		p->body.x -= VEL * time_step;
 	if (IsKeyDown(KEY_D))
 		p->body.x += VEL * time_step;
+}
 
-	entity_update(p, time_step);
+void player_render(const Player *p)
+{
+	DrawRectangleRec(p->body, p->color);
 }

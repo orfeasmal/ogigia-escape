@@ -12,8 +12,8 @@ RAYLIB_DIR = raylib-5.5
 CC = clang
 LD = clang
 
-CFLAGS =  -std=c11 -Wall -Wextra -Wpedantic -I.
-CFLAGS += -Ideps/$(RAYLIB_DIR)/src -Ideps/$(RAYLIB_DIR)/src/external # -Ideps/$(MINIAUDIO_DIR)
+CFLAGS =  -std=c11 -Wall -Wpedantic -I.
+CFLAGS += -Ideps/ -Ideps/$(RAYLIB_DIR)/src -Ideps/$(RAYLIB_DIR)/src/external # -Ideps/$(MINIAUDIO_DIR)
 
 CFLAGS_DEB = -O0 -g -gdwarf-4 -fsanitize=address
 CFLAGS_REL = -O3

@@ -1,0 +1,101 @@
+{
+	"general": [
+		{
+			"suspicion": 0,
+			"question": "Whatcha doing?",
+			"answers": [
+				{
+					"suspiciousness": 1,
+					"answer": "Felt like going for a walk."
+				},
+				{
+					"suspiciousness": 3,
+					"answer": "Nothing."
+				},
+				{
+					"suspiciousness": 7,
+					"answer": "Uhhh... I am thinking about you."
+				},
+				{
+					"suspiciousness": 10,
+					"answer": "I am planning my escape."
+				}
+			]
+		}
+	],
+
+	"tree": [
+		{
+			"suspicion": 0,
+			"question": "Why are you cutting down that tree?",
+			"answers": [
+				{
+					"suspiciousness": 1,
+					"answer": "For fire."
+				},
+				{
+					"suspiciousness": 3,
+					"answer": "To build us a nice bed."
+				},
+				{
+					"suspiciousness": 7,
+					"answer": "I was bored."
+				},
+				{
+					"suspiciousness": 10,
+					"answer": "To build a raft and escape."
+				}
+			]
+		}
+	],
+
+	"plant": [
+		{
+			"suspicion": 0,
+			"question": "Why are you collecting these plants?",
+			"answers": [
+				{
+					"suspiciousness": 1,
+					"answer": "I want to clean this place of some weeds."
+				},
+				{
+					"suspiciousness": 3,
+					"answer": "I don't know."
+				},
+				{
+					"suspiciousness": 7,
+					"answer": "Leave me alone!"
+				},
+				{
+					"suspiciousness": 10,
+					"answer": "It's all part of my plan."
+				}
+			]
+		}
+	],
+
+	"raft": [
+		{
+			"suspicion": 0,
+			"question": "Hey, what are you making there?",
+			"answers": [
+				{
+					"suspiciousness": 10,
+					"answer": "I am building us a boat so we can enjoy the ocean."
+				},
+				{
+					"suspiciousness": 20,
+					"answer": "Uhhhh, stuff."
+				},
+				{
+					"suspiciousness": 25,
+					"answer": "None of your business!"
+				},
+				{
+					"suspiciousness": 30,
+					"answer": "To get out of here!"
+				}
+			]
+		}
+	]
+}
