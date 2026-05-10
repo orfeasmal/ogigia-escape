@@ -9,7 +9,7 @@
 #define PLAYER_HEIGHT 75.0f
 #define PLAYER_COLOR BLUE
 
-#define VEL 400.0f
+#define SPEED 200.0f
 
 Player player_create(float x, float y)
 {
@@ -26,6 +26,19 @@ Player player_create(float x, float y)
 
 void player_update(Player *p, Plant *plants, uint32_t *plants_count, float time_step)
 {
+	switch (p->state) {
+		case PLAYER_DOING_NOTHING:
+			break;
+		case PLAYER_CUTTING_TREE:
+			break;
+		case PLAYER_PICKING_PLANTS:
+			break;
+		case PLAYER_BUILDING_RAFT:
+			break;
+		case PLAYER_BEING_QUESTIONED:
+			return;
+	}
+
 	for (uint32_t i = 0; i < *plants_count; ++i) {
 		Plant *plant = &plants[i];
 
@@ -46,13 +59,13 @@ void player_update(Player *p, Plant *plants, uint32_t *plants_count, float time_
 	}
 
 	if (IsKeyDown(KEY_W))
-		p->body.y -= VEL * time_step;
+		p->body.y -= SPEED * time_step;
 	if (IsKeyDown(KEY_S))
-		p->body.y += VEL * time_step;
+		p->body.y += SPEED * time_step;
 	if (IsKeyDown(KEY_A))
-		p->body.x -= VEL * time_step;
+		p->body.x -= SPEED * time_step;
 	if (IsKeyDown(KEY_D))
-		p->body.x += VEL * time_step;
+		p->body.x += SPEED * time_step;
 }
 
 void player_render(const Player *p)
