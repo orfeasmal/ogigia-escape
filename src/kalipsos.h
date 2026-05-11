@@ -8,23 +8,25 @@
 
 #include "player.h"
 
-#define MAX_ANSWER_COUNT 4
-
 typedef struct {
+	Rectangle body;
 	const char *str;
 	uint32_t suspiciousness;
 } Answer;
 
 typedef enum {
-	KALIPSOS_DOING_NOTHING,
+	KALIPSOS_CHASING_PLAYER,
 	KALIPSOS_QUESTIONING
 } KalipsosState;
+
+#define SUSPICION_MAX 100
+#define ANSWERS_MAX_COUNT 4
 
 typedef struct {
 	Rectangle body;
 	Jsimplon_Value *json_root_value;
 	const char *question;
-	Answer answers[MAX_ANSWER_COUNT];
+	Answer answers[ANSWERS_MAX_COUNT];
 	uint32_t answers_count;
 
 	Vector2 vel;

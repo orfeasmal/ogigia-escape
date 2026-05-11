@@ -31,7 +31,7 @@ void player_update(Player *p, Plant *plants, uint32_t *plants_count, float time_
 			break;
 		case PLAYER_CUTTING_TREE:
 			break;
-		case PLAYER_PICKING_PLANTS:
+		case PLAYER_PICKING_WEEDS:
 			break;
 		case PLAYER_BUILDING_RAFT:
 			break;

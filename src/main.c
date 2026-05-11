@@ -30,17 +30,23 @@ int main(void)
 		float time_step = GetFrameTime();
 
 		// UPDATE
-		player_update(&player, plants, &plants_count, time_step);
-		kalipsos_update(&kalipsos, &player, time_step);
+
+		if (kalipsos.suspicion >= SUSPICION_MAX) {
+			break;
+		}
+		else {
+			player_update(&player, plants, &plants_count, time_step);
+			kalipsos_update(&kalipsos, &player, time_step);
+		}
 
 		// RENDER
 		ClearBackground(GREEN);
 		BeginDrawing();
 
-		player_render(&player);
-		kalipsos_render(&kalipsos);
 		for (uint32_t i = 0; i < plants_count; ++i)
 			plant_render(&plants[i]);
+		player_render(&player);
+		kalipsos_render(&kalipsos);
 
 		EndDrawing();
 	}
