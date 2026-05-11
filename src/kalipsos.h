@@ -8,6 +8,9 @@
 
 #include "player.h"
 
+#define ANSWERS_MAX_COUNT 4
+#define SUSPICION_MAX 100
+
 typedef struct {
 	Rectangle body;
 	const char *str;
@@ -18,9 +21,6 @@ typedef enum {
 	KALIPSOS_CHASING_PLAYER,
 	KALIPSOS_QUESTIONING
 } KalipsosState;
-
-#define SUSPICION_MAX 100
-#define ANSWERS_MAX_COUNT 4
 
 typedef struct {
 	Rectangle body;

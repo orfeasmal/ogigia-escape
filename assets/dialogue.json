@@ -25,6 +25,27 @@
 		],
 
 		"suspicion <= 66": [
+			{
+				"question": "Why have you been acting a little weird lately?",
+				"answers": [
+					{
+						"suspiciousness": 3,
+						"answer": "I'm just feeling a bit under the weather."
+					},
+					{
+						"suspiciousness": 8,
+						"answer": "Leave me alone."
+					},
+					{
+						"suspiciousness": 12,
+						"answer": "It's all in your head."
+					},
+					{
+						"suspiciousness": 15,
+						"answer": "You are onto me, it seems."
+					}
+				]
+			}
 		],
 
 		"suspicion <= 99": [

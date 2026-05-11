@@ -86,16 +86,16 @@ void kalipsos_update(Kalipsos *k, Player *player, float time_step)
 					json_temp_object = jsimplon_object_member_get_object(json_temp_object, "general");
 					break;
 				case PLAYER_PICKING_PLANT:
-					if (player->plant_being_picked.type == PLANT_TREE)
+					if (player->plant_being_picked_type == PLANT_TREE)
 						json_temp_object = jsimplon_object_member_get_object(json_temp_object, "tree");
-					else if (player->plant_being_picked.type == PLANT_WEED)
+					else if (player->plant_being_picked_type == PLANT_WEED)
 						json_temp_object = jsimplon_object_member_get_object(json_temp_object, "weed");
 					else {
 						fprintf(stderr, "internal error: unreachable plant type in kalipsos_update\n");
 						exit(EXIT_FAILURE);
 					}
 					break;
-				case PLAYER_BUILDING_RAFT:
+				case PLAYER_DEPOSITING_TO_RAFT:
 					json_temp_object = jsimplon_object_member_get_object(json_temp_object, "raft");
 					break;
 				default:
@@ -127,7 +127,7 @@ void kalipsos_update(Kalipsos *k, Player *player, float time_step)
 			Jsimplon_Array *json_answer_array = jsimplon_object_member_get_array(json_temp_object, "answers");
 			k->answers_count = jsimplon_array_get_count(json_answer_array);
 			if (k->answers_count > ANSWERS_MAX_COUNT) {
-				fprintf(stderr, "internal error: dialogue per question answer limit exceeded %d\n", ANSWERS_MAX_COUNT);
+				fprintf(stderr, "warning: dialogue per question answer limit exceeded %d\n", ANSWERS_MAX_COUNT);
 				k->answers_count = ANSWERS_MAX_COUNT;
 			}
 
@@ -178,8 +178,28 @@ void kalipsos_update(Kalipsos *k, Player *player, float time_step)
 	k->timer += time_step;
 }
 
+#define SUSPICION_BAR_WIDTH 75.0f
+#define SUSPICION_BAR_HEIGHT 20.0f
+
+#define SUSPICION_BAR_COLOR RED
+
 void kalipsos_render(const Kalipsos *k)
 {
+	if (k->suspicion > 0) {
+		Rectangle suspicion_bar_outline = {
+			.x = (k->body.x + k->body.width / 2.0f) - SUSPICION_BAR_WIDTH / 2.0f,
+			.y = k->body.y - SUSPICION_BAR_HEIGHT * 1.5f,
+			.width = SUSPICION_BAR_WIDTH,
+			.height = SUSPICION_BAR_HEIGHT
+		};
+
+		Rectangle suspicion_bar = suspicion_bar_outline;
+		suspicion_bar.width *= (float)k->suspicion / SUSPICION_MAX;
+
+		DrawRectangleRec(suspicion_bar, SUSPICION_BAR_COLOR);
+		DrawRectangleLinesEx(suspicion_bar_outline, 2.0f, BLACK);
+	}
+
 	DrawRectangleRec(k->body, k->color);
 
 	if (k->state != KALIPSOS_QUESTIONING)

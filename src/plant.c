@@ -3,9 +3,14 @@
 
 #include "plant.h"
 
-#define PLANT_WIDTH 25.0f
-#define PLANT_HEIGHT 25.0f
-#define PLANT_COLOR BLACK
+#define TREE_WIDTH 25.0f
+#define TREE_HEIGHT 50.0f
+
+#define WEED_WIDTH 20.0f
+#define WEED_HEIGHT 20.0f
+
+#define TREE_COLOR GREEN
+#define WEED_COLOR LIME
 
 #define TREE_TIME 5.0f
 #define WEED_TIME 2.0f
@@ -16,18 +21,21 @@ Plant plant_create(PlantType type, float x, float y)
 		.body = {
 			.x = x,
 			.y = y,
-			.width = PLANT_WIDTH,
-			.height = PLANT_HEIGHT
 		},
-		.type = type,
-		.color = PLANT_COLOR
+		.type = type
 	};
 
 	switch (type) {
 		case PLANT_TREE:
+			plant.body.width = TREE_WIDTH;
+			plant.body.height = TREE_HEIGHT;
+			plant.color = TREE_COLOR;
 			plant.time_needed_to_pick = TREE_TIME;
 			break;
 		case PLANT_WEED:
+			plant.body.width = WEED_WIDTH;
+			plant.body.height = WEED_HEIGHT;
+			plant.color = WEED_COLOR;
 			plant.time_needed_to_pick = WEED_TIME;
 			break;
 		default:
