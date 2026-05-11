@@ -9,22 +9,23 @@
 
 typedef enum {
 	PLAYER_DOING_NOTHING,
-	PLAYER_CUTTING_TREE,
-	PLAYER_PICKING_WEEDS,
+	PLAYER_PICKING_PLANT,
 	PLAYER_BUILDING_RAFT,
 	PLAYER_BEING_QUESTIONED,
 } PlayerState;
 
 typedef struct {
 	Rectangle body;
-	Vector2 vel;
 
 	PlayerState state;
 	Color color;
 
 	float timer;
 
-	uint32_t plants_in_possesion[PLANT_COUNT]; // for the player
+	Plant plant_being_picked;
+	uint32_t plant_being_picked_index;
+
+	uint32_t plants_in_possesion[PLANT_COUNT];
 } Player;
 
 Player player_create(float x, float y);

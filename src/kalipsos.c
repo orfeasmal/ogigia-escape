@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdlib.h>
 
 #define JSIMPLON_STATIC
 #define JSIMPLON_IMPLEMENTATION
@@ -84,11 +85,15 @@ void kalipsos_update(Kalipsos *k, Player *player, float time_step)
 				case PLAYER_DOING_NOTHING:
 					json_temp_object = jsimplon_object_member_get_object(json_temp_object, "general");
 					break;
-				case PLAYER_CUTTING_TREE:
-					json_temp_object = jsimplon_object_member_get_object(json_temp_object, "tree");
-					break;
-				case PLAYER_PICKING_WEEDS:
-					json_temp_object = jsimplon_object_member_get_object(json_temp_object, "weed");
+				case PLAYER_PICKING_PLANT:
+					if (player->plant_being_picked.type == PLANT_TREE)
+						json_temp_object = jsimplon_object_member_get_object(json_temp_object, "tree");
+					else if (player->plant_being_picked.type == PLANT_WEED)
+						json_temp_object = jsimplon_object_member_get_object(json_temp_object, "weed");
+					else {
+						fprintf(stderr, "internal error: unreachable plant type in kalipsos_update\n");
+						exit(EXIT_FAILURE);
+					}
 					break;
 				case PLAYER_BUILDING_RAFT:
 					json_temp_object = jsimplon_object_member_get_object(json_temp_object, "raft");

@@ -13,6 +13,7 @@ typedef struct {
 	Rectangle body;
 	PlantType type;
 	Color color;
+	float time_needed_to_pick;
 } Plant;
 
 Plant plant_create(PlantType type, float x, float y);
