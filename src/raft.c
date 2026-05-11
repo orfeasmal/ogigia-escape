@@ -16,7 +16,7 @@ Raft raft_create(uint32_t window_width, uint32_t window_height, Rectangle ocean)
 {
 	return (Raft) {
 		.body = {
-			.x = ocean.x + 10.0f,
+			.x = ocean.x + RAFT_WIDTH / 2.0f,
 			.y = window_height / 2.0f - RAFT_HEIGHT / 2.0f,
 			.width = RAFT_WIDTH,
 			.height = RAFT_HEIGHT
@@ -30,6 +30,8 @@ Raft raft_create(uint32_t window_width, uint32_t window_height, Rectangle ocean)
 	};
 }
 
+#define MATERIAL_REQUIREMENT_FONT_SIZE 20.0f
+
 void raft_render(const Raft *r)
 {
 	Rectangle partial_raft_body = r->body;
@@ -42,4 +44,10 @@ void raft_render(const Raft *r)
 
 	DrawRectangleLinesEx(r->body, 5.0f, r->color);
 	DrawRectangleRec(partial_raft_body, r->color);
+
+	const char *wood_str = TextFormat("Wood needed: %d", r->plants_needed_to_be_built[PLANT_TREE]);
+	DrawText(wood_str, r->body.x + r->body.width / 2.0f - MeasureText(wood_str, MATERIAL_REQUIREMENT_FONT_SIZE) / 2.0f, r->body.y - MATERIAL_REQUIREMENT_FONT_SIZE - 10, MATERIAL_REQUIREMENT_FONT_SIZE, BLACK);
+
+	const char *string_str = TextFormat("String needed: %d", r->plants_needed_to_be_built[PLANT_WEED]);
+	DrawText(string_str, r->body.x + r->body.width / 2.0f - MeasureText(string_str, MATERIAL_REQUIREMENT_FONT_SIZE) / 2.0f, r->body.y + r->body.height + 10, MATERIAL_REQUIREMENT_FONT_SIZE, BLACK);
 }

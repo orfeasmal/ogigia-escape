@@ -77,7 +77,7 @@ void player_update(
 			}
 		);
 
-		if (distance_from_raft <= p->body.width * 2.5f) {
+		if (distance_from_raft <= p->body.width * 5.0f) {
 			p->can_interact_with_raft = true;
 
 			if (IsKeyPressed(KEY_E)) {
