@@ -18,7 +18,7 @@
 
 #define COOLDOWN 4.0f
 
-#define QUESTION_FONT_SIZE 35
+#define QUESTION_FONT_SIZE 30
 #define ANSWER_FONT_SIZE 30
 #define ANSWER_SEPARATION 10
 
@@ -110,12 +110,18 @@ void kalipso_update(Kalipso *k, Player *player, const Sound *sounds, float time_
 
 			Jsimplon_Array *json_question_array = NULL;
 
-			if (k->suspicion <= 33)
+			if (k->suspicion <= 33) {
+				PlaySound(sounds[SOUND_KALIPSO_TALKING_LOW_SUSPICION]);
 				json_question_array = jsimplon_object_member_get_array(json_temp_object, "suspicion <= 33");
-			else if (k->suspicion <= 66)
+			}
+			else if (k->suspicion <= 66) {
+				PlaySound(sounds[SOUND_KALIPSO_TALKING_MEDIUM_SUSPICION]);
 				json_question_array = jsimplon_object_member_get_array(json_temp_object, "suspicion <= 66");
-			else if (k->suspicion <= 99)
+			}
+			else if (k->suspicion <= 99) {
+				PlaySound(sounds[SOUND_KALIPSO_TALKING_HIGH_SUSPICION]);
 				json_question_array = jsimplon_object_member_get_array(json_temp_object, "suspicion <= 99");
+			}
 
 			size_t json_question_array_count = jsimplon_array_get_count(json_question_array);
 
@@ -168,6 +174,8 @@ void kalipso_update(Kalipso *k, Player *player, const Sound *sounds, float time_
 				Answer answer = k->answers[i];
 
 				if (CheckCollisionPointRec(GetMousePosition(), answer.body)) {
+					PlaySound(sounds[SOUND_PLAYER_TALKING]);
+
 					k->suspicion += answer.suspiciousness;
 					k->timer = 0.0f;
 
@@ -210,7 +218,8 @@ void kalipso_render(const Kalipso *k)
 	if (k->state != KALIPSO_QUESTIONING)
 		return;
 
-	DrawText(k->question, ANSWER_SEPARATION, ANSWER_SEPARATION / 2.0f, QUESTION_FONT_SIZE, BLACK);
+	DrawRectangle(ANSWER_SEPARATION, 0, MeasureText(k->question, QUESTION_FONT_SIZE) + ANSWER_SEPARATION, QUESTION_FONT_SIZE + ANSWER_SEPARATION / 2.0f, WHITE);
+	DrawText(k->question, ANSWER_SEPARATION + ANSWER_SEPARATION / 2.0f, ANSWER_SEPARATION / 2.0f, QUESTION_FONT_SIZE, BLACK);
 
 	for (uint32_t i = 0; i < k->answers_count; ++i) {
 		Answer answer = k->answers[i];

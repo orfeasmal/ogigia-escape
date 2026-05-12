@@ -220,7 +220,7 @@ void player_render(const Player *p, uint32_t window_width, uint32_t window_heigh
 			if (items_in_possesion_total < MAX_ITEMS_IN_POSSESION)
 				str = "Press 'E' to collect";
 			else
-				str = "Reached inventory limit, deposit to raft";
+				str = "Inventory full, deposit to raft";
 
 			DrawText(str, p->body.x + p->body.width / 2.0f - MeasureText(str, TIMER_BAR_HEIGHT) / 2.0f, p->body.y + p->body.height + 10, TIMER_BAR_HEIGHT, BLACK);
 		}

@@ -5,11 +5,11 @@
 				"question": "Whatcha doing?",
 				"answers": [
 					{
-						"suspiciousness": 1,
+						"suspiciousness": 3,
 						"answer": "Felt like going for a walk."
 					},
 					{
-						"suspiciousness": 3,
+						"suspiciousness": 4,
 						"answer": "Nothing."
 					},
 					{
@@ -26,11 +26,11 @@
 				"question": "How are you?",
 				"answers": [
 					{
-						"suspiciousness": 1,
+						"suspiciousness": 3,
 						"answer": "I'm okay, just a bit a bored."
 					},
 					{
-						"suspiciousness": 3,
+						"suspiciousness": 4,
 						"answer": "Fine."
 					},
 					{
@@ -47,11 +47,11 @@
 				"question": "What's up?",
 				"answers": [
 					{
-						"suspiciousness": 1,
+						"suspiciousness": 3,
 						"answer": "All good, just wandering around."
 					},
 					{
-						"suspiciousness": 3,
+						"suspiciousness": 4,
 						"answer": "The sky."
 					},
 					{
@@ -68,11 +68,11 @@
 				"question": "Quick! what's 2 + 2?",
 				"answers": [
 					{
-						"suspiciousness": 1,
+						"suspiciousness": 3,
 						"answer": "4!"
 					},
 					{
-						"suspiciousness": 3,
+						"suspiciousness": 4,
 						"answer": "5, it always has been."
 					},
 					{
@@ -92,7 +92,7 @@
 				"question": "Why have you been acting a little weird lately?",
 				"answers": [
 					{
-						"suspiciousness": 3,
+						"suspiciousness": 5,
 						"answer": "I'm just feeling a bit under the weather."
 					},
 					{
@@ -113,7 +113,7 @@
 				"question": "Hmmm, something about you seems off today.",
 				"answers": [
 					{
-						"suspiciousness": 3,
+						"suspiciousness": 5,
 						"answer": "Why, I'm just minding my own business."
 					},
 					{
@@ -134,7 +134,7 @@
 				"question": "I don't have a good feeling about the things you've been telling me.",
 				"answers": [
 					{
-						"suspiciousness": 3,
+						"suspiciousness": 5,
 						"answer": "Eh well, it's probably just a misunderstanding."
 					},
 					{
@@ -158,7 +158,7 @@
 				"question": "I'm sure you're up to no good. Explain yourself.",
 				"answers": [
 					{
-						"suspiciousness": 5,
+						"suspiciousness": 7,
 						"answer": "I'll explain everything in just a moment, I'm a little busy."
 					},
 					{
@@ -179,7 +179,7 @@
 				"question": "I've had enough of your shenaningans! Tell me what's going on!",
 				"answers": [
 					{
-						"suspiciousness": 5,
+						"suspiciousness": 7,
 						"answer": "Nothing, I'm just having a bad day!"
 					},
 					{
@@ -195,6 +195,27 @@
 						"answer": "Haven't I told you already? I'm trying to get out of here ASAP!"
 					}
 				]
+			},
+			{
+				"question": "I'm starting to get really infuriated. Please tell me this is all just a sick joke!",
+				"answers": [
+					{
+						"suspiciousness": 7,
+						"answer": "Calm down! I'm preparing something nice, you'll see."
+					},
+					{
+						"suspiciousness": 12,
+						"answer": "You're just crazy!"
+					},
+					{
+						"suspiciousness": 15,
+						"answer": "I wouldn't keep up that attitude if I were you."
+					},
+					{
+						"suspiciousness": 20,
+						"answer": "No this isn't a joke. And you nagging me is making this even less of a joke!"
+					}
+				]
 			}
 		]
 	},
@@ -205,11 +226,11 @@
 				"question": "Why are you cutting down that tree?",
 				"answers": [
 					{
-						"suspiciousness": 1,
+						"suspiciousness": 3,
 						"answer": "For fire."
 					},
 					{
-						"suspiciousness": 3,
+						"suspiciousness": 4,
 						"answer": "To build us a nice bed."
 					},
 					{
@@ -221,13 +242,160 @@
 						"answer": "To build a raft and escape."
 					}
 				]
+			},
+			{
+				"question": "That tree was my favourite!",
+				"answers": [
+					{
+						"suspiciousness": 3,
+						"answer": "Oh I'm sorry, I will plant you a new one."
+					},
+					{
+						"suspiciousness": 4,
+						"answer": "You had a favourite tree?"
+					},
+					{
+						"suspiciousness": 7,
+						"answer": "Even better!"
+					},
+					{
+						"suspiciousness": 10,
+						"answer": "Makes sense why it was your favourite, this wood is perfect for a raft!"
+					}
+				]
+			},
+			{
+				"question": "So you're a lumberjack now?",
+				"answers": [
+					{
+						"suspiciousness": 3,
+						"answer": "Who knows, it's never too late to try something new."
+					},
+					{
+						"suspiciousness": 4,
+						"answer": "Are you messing with me?"
+					},
+					{
+						"suspiciousness": 7,
+						"answer": "Leave me alone, can't you see I'm busy?"
+					},
+					{
+						"suspiciousness": 10,
+						"answer": "No, only for today; I won't be here to cut any more trees tomorrow!"
+					}
+				]
 			}
 		],
 
 		"suspicion <= 66": [
+			{
+				"question": "Why are you cutting down so many trees? There aren't going to be any left!",
+				"answers": [
+					{
+						"suspiciousness": 5,
+						"answer": "I'll plant as many as I cut down, dont worry."
+					},
+					{
+						"suspiciousness": 8,
+						"answer": "Who cares?"
+					},
+					{
+						"suspiciousness": 12,
+						"answer": "Just let me do my job!"
+					},
+					{
+						"suspiciousness": 15,
+						"answer": "Well, I only need a few more to finish my raft!"
+					}
+				]
+			},
+			{
+				"question": "These poor trees did nothing to you.",
+				"answers": [
+					{
+						"suspiciousness": 5,
+						"answer": "Only a few more and I'm done."
+					},
+					{
+						"suspiciousness": 8,
+						"answer": "The trees don't have feelings!"
+					},
+					{
+						"suspiciousness": 12,
+						"answer": "Leave me alone!!!"
+					},
+					{
+						"suspiciousness": 15,
+						"answer": "I like them and I want to take them with me to Ithaki."
+					}
+				]
+			},
+			{
+				"question": "How much wood do you need anyway?",
+				"answers": [
+					{
+						"suspiciousness": 5,
+						"answer": "Winter is coming, we're going to need a lot of fire!"
+					},
+					{
+						"suspiciousness": 8,
+						"answer": "Cutting down trees is good therapy."
+					},
+					{
+						"suspiciousness": 12,
+						"answer": "Enough for you to stop asking."
+					},
+					{
+						"suspiciousness": 15,
+						"answer": "A raft requires quite a bit of wood."
+					}
+				]
+			}
 		],
 
 		"suspicion <= 99": [
+			{
+				"question": "Stop cutting down trees!",
+				"answers": [
+					{
+						"suspiciousness": 7,
+						"answer": "Hey, hey, let's calm down and talk about this when I'm done."
+					},
+					{
+						"suspiciousness": 12,
+						"answer": "I won't do what you tell me!"
+					},
+					{
+						"suspiciousness": 15,
+						"answer": "Why should I listen to you?"
+					},
+					{
+						"suspiciousness": 20,
+						"answer": "Not until I have enough to get as far away from you as I can!"
+					}
+				]
+			},
+			{
+				"question": "Cut one more tree down and I'm going to stop being so nice.",
+				"answers": [
+					{
+						"suspiciousness": 7,
+						"answer": "Please, just one more."
+					},
+					{
+						"suspiciousness": 12,
+						"answer": "I have a few more to go, be a little more patient."
+					},
+					{
+						"suspiciousness": 15,
+						"answer": "As if you were nice before I started doing this."
+					},
+					{
+						"suspiciousness": 20,
+						"answer": "I'll cut 100 more if it means I can escape from this prison!"
+					}
+				]
+			}
 		]
 	},
 
@@ -237,11 +405,11 @@
 				"question": "Why are you collecting these weeds?",
 				"answers": [
 					{
-						"suspiciousness": 1,
-						"answer": "I want to clean this place of some weeds."
+						"suspiciousness": 3,
+						"answer": "I want to rid this place of weeds."
 					},
 					{
-						"suspiciousness": 3,
+						"suspiciousness": 4,
 						"answer": "I don't know."
 					},
 					{
@@ -253,13 +421,181 @@
 						"answer": "It's all part of my plan."
 					}
 				]
+			},
+			{
+				"question": "You never clean the weeds, what's up?",
+				"answers": [
+					{
+						"suspiciousness": 3,
+						"answer": "I couldn't stand them, they are an eye-sore."
+					},
+					{
+						"suspiciousness": 4,
+						"answer": "Uhh, yeah I do, just when you're not looking."
+					},
+					{
+						"suspiciousness": 7,
+						"answer": "Nothing's up, stop following me!"
+					},
+					{
+						"suspiciousness": 10,
+						"answer": "I'm not exactly cleaning, I'm making a raft."
+					}
+				]
+			},
+			{
+				"question": "How nice of you to clean these weeds, I would've cleaned them myself.",
+				"answers": [
+					{
+						"suspiciousness": 3,
+						"answer": "No problem."
+					},
+					{
+						"suspiciousness": 4,
+						"answer": "You're welcome, but now stop talking to me."
+					},
+					{
+						"suspiciousness": 7,
+						"answer": "There is no way you would've done anything, I'm the only one who cares!"
+					},
+					{
+						"suspiciousness": 10,
+						"answer": "Good thing I beat you to it, or else there wouldn't be any left to build my raft!"
+					}
+				]
 			}
 		],
 		
 		"suspicion <= 66": [
+			{
+				"question": "You sure are collecting an awful lot of weeds. This isn't usually you.",
+				"answers": [
+					{
+						"suspiciousness": 5,
+						"answer": "Well, there is a first time for everything, right?"
+					},
+					{
+						"suspiciousness": 8,
+						"answer": "I would've collected even more if it weren't for you getting on my nerves."
+					},
+					{
+						"suspiciousness": 12,
+						"answer": "I haven't collected a single weed, are you crazy?!"
+					},
+					{
+						"suspiciousness": 15,
+						"answer": "Yes, because I'm usually not trying to escape."
+					}
+				]
+			},
+			{
+				"question": "Hey those are not weeds, those are flowers!",
+				"answers": [
+					{
+						"suspiciousness": 5,
+						"answer": "Oh I'm sorry I'll be more careful next time."
+					},
+					{
+						"suspiciousness": 8,
+						"answer": "Well, it is what it is."
+					},
+					{
+						"suspiciousness": 12,
+						"answer": "I don't care. Flower, weed, what's the difference?"
+					},
+					{
+						"suspiciousness": 15,
+						"answer": "It doesn't matter, both will help me build my raft."
+					}
+				]
+			},
+			{
+				"question": "Hey bro, that's my bro!",
+				"answers": [
+					{
+						"suspiciousness": 5,
+						"answer": "Bro!"
+					},
+					{
+						"suspiciousness": 8,
+						"answer": "I'm not you bro!"
+					},
+					{
+						"suspiciousness": 12,
+						"answer": "What? Have you gone insane?"
+					},
+					{
+						"suspiciousness": 15,
+						"answer": "Bro, this raft is going to be lit bro."
+					}
+				]
+			}
 		],
 		
 		"suspicion <= 99": [
+			{
+				"question": "What are you up to? You're collecting these weeds, not cleaning them!",
+				"answers": [
+					{
+						"suspiciousness": 7,
+						"answer": "Uhhh, I'll let them dry and use them as fire starters."
+					},
+					{
+						"suspiciousness": 12,
+						"answer": "I wanted to make you a bouquet... Yes with weeds; it's avant-garde."
+					},
+					{
+						"suspiciousness": 15,
+						"answer": "None of your business!"
+					},
+					{
+						"suspiciousness": 20,
+						"answer": "I thought I already told you, I'm making a raft."
+					}
+				]
+			},
+			{
+				"question": "Can you explain why you have been cleaning so many weeds? Something is fishy.",
+				"answers": [
+					{
+						"suspiciousness": 7,
+						"answer": "There a perfectly good explanation, I swear!"
+					},
+					{
+						"suspiciousness": 12,
+						"answer": "No I can't, I don't know why I'm doing it; some things just happen."
+					},
+					{
+						"suspiciousness": 15,
+						"answer": "I can, but I won't, just because."
+					},
+					{
+						"suspiciousness": 20,
+						"answer": "Sure, I am trying to get out of here and you're getting in the way."
+					}
+				]
+			},
+			{
+				"question": "I'm starting to get very suspicious of this whole weed collecting thing you're doing.",
+				"answers": [
+					{
+						"suspiciousness": 7,
+						"answer": "I'm just trying to be a better person by cleaning!"
+					},
+					{
+						"suspiciousness": 12,
+						"answer": "You're just paranoid!"
+					},
+					{
+						"suspiciousness": 15,
+						"answer": "Not my problem that you're suspicious of the littlest things."
+					},
+					{
+						"suspiciousness": 20,
+						"answer": "How is it suspicion and not certainty yet? You have all the clues!"
+					}
+				]
+			}
 		]
 	},
 
@@ -269,29 +605,113 @@
 				"question": "Hey, what are you making there?",
 				"answers": [
 					{
-						"suspiciousness": 10,
+						"suspiciousness": 5,
 						"answer": "I am building us a boat so we can enjoy the ocean."
 					},
 					{
-						"suspiciousness": 20,
+						"suspiciousness": 7,
 						"answer": "Uhhhh, stuff."
 					},
 					{
-						"suspiciousness": 25,
+						"suspiciousness": 10,
 						"answer": "None of your business!"
 					},
 					{
-						"suspiciousness": 30,
-						"answer": "To get out of here!"
+						"suspiciousness": 15,
+						"answer": "I'm building a boat... To get the hell out of here!"
+					}
+				]
+			},
+			{
+				"question": "Is this what you need all those plants for?",
+				"answers": [
+					{
+						"suspiciousness": 5,
+						"answer": "Yeah, it's something for you, you'll see."
+					},
+					{
+						"suspiciousness": 7,
+						"answer": "I'm preparing to light us a fire by the shore tonight."
+					},
+					{
+						"suspiciousness": 10,
+						"answer": "I'm not telling you anything."
+					},
+					{
+						"suspiciousness": 15,
+						"answer": "Yeah, it's a soon-to-be raft."
+					}
+				]
+			},
+			{
+				"question": "The shore isn't a place to dump your trash!",
+				"answers": [
+					{
+						"suspiciousness": 5,
+						"answer": "I am gonna pick them up later don't worry!"
+					},
+					{
+						"suspiciousness": 7,
+						"answer": "It's not trash, they're materials."
+					},
+					{
+						"suspiciousness": 10,
+						"answer": "Who cares?"
+					},
+					{
+						"suspiciousness": 15,
+						"answer": "It isn't trash, it's for my raft."
 					}
 				]
 			}
 		],
 
 		"suspicion <= 66": [
+			{
+				"question": "This is starting to look like some sort of makeshift boat.",
+				"answers": [
+					{
+						"suspiciousness": 7,
+						"answer": "Yeah, it's a boat for us!"
+					},
+					{
+						"suspiciousness": 10,
+						"answer": "You're imagining things."
+					},
+					{
+						"suspiciousness": 15,
+						"answer": "No, it's a surf board."
+					},
+					{
+						"suspiciousness": 20,
+						"answer": "Exactly, and I'm going to get out of here with it any moment now."
+					}
+				]
+			}
 		],
 		
 		"suspicion <= 99": [
+			{
+				"question": "Okay, this is definitely a raft, explain yourself.",
+				"answers": [
+					{
+						"suspiciousness": 10,
+						"answer": "Didn't I tell you already, it's for us!"
+					},
+					{
+						"suspiciousness": 15,
+						"answer": "It's a surf board!!"
+					},
+					{
+						"suspiciousness": 20,
+						"answer": "I am not gonna explain anything and I'll keep minding my own business."
+					},
+					{
+						"suspiciousness": 25,
+						"answer": "Bingo! You finally caught on! You're gonna miss me."
+					}
+				]
+			}
 		]
 	}
 }

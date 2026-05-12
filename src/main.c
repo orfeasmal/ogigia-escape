@@ -8,6 +8,10 @@
 #include "kalipso.h"
 
 #define SOUND_BACKGROUND_PATH "assets/audio/background.wav"
+#define SOUND_PLAYER_TALKING_PATH "assets/audio/player_talking.wav"
+#define SOUND_KALIPSO_TALKING_LOW_SUSPICION_PATH "assets/audio/kalipso_talking_low_suspicion.wav"
+#define SOUND_KALIPSO_TALKING_MEDIUM_SUSPICION_PATH "assets/audio/kalipso_talking_medium_suspicion.wav"
+#define SOUND_KALIPSO_TALKING_HIGH_SUSPICION_PATH "assets/audio/kalipso_talking_high_suspicion.wav"
 #define SOUND_PLAYER_WALKING_PATH "assets/audio/player_walking.wav"
 #define SOUND_TREE_BREAKING_PATH "assets/audio/tree_breaking.wav"
 #define SOUND_TREE_BROKEN_PATH "assets/audio/tree_broken.wav"
@@ -17,11 +21,11 @@
 
 #define WIDTH 1280
 #define HEIGHT 720
-#define TITLE "Game Jam"
+#define TITLE "Ogigia Escape"
 
 #define PLANTS_CAPACITY 128
 
-#define GAME_OVER_FONT_SIZE 60
+#define GAME_OVER_FONT_SIZE 55
 
 #define PLANT_COUNT 20
 
@@ -31,6 +35,10 @@ int main(void)
 	InitAudioDevice();
 
 	Sound sounds[SOUND_ENUM_COUNT] = { 0 };
+	sounds[SOUND_PLAYER_TALKING] = LoadSound(SOUND_PLAYER_TALKING_PATH);
+	sounds[SOUND_KALIPSO_TALKING_LOW_SUSPICION] = LoadSound(SOUND_KALIPSO_TALKING_LOW_SUSPICION_PATH);
+	sounds[SOUND_KALIPSO_TALKING_MEDIUM_SUSPICION] = LoadSound(SOUND_KALIPSO_TALKING_MEDIUM_SUSPICION_PATH);
+	sounds[SOUND_KALIPSO_TALKING_HIGH_SUSPICION] = LoadSound(SOUND_KALIPSO_TALKING_HIGH_SUSPICION_PATH);
 	sounds[SOUND_BACKGROUND] = LoadSound(SOUND_BACKGROUND_PATH);
 	sounds[SOUND_PLAYER_WALKING] = LoadSound(SOUND_PLAYER_WALKING_PATH);
 	sounds[SOUND_TREE_BREAKING] = LoadSound(SOUND_TREE_BREAKING_PATH);
@@ -92,15 +100,15 @@ int main(void)
 
 			DrawRectangleRec(ocean, BLUE);
 
+#define TIME_FONT_SIZE 22
+			const char *time_str = TextFormat("%.1fs ELAPSED", time_elapsed);
+			DrawText(time_str, WIDTH - MeasureText(time_str, TIME_FONT_SIZE) - 10, 10, TIME_FONT_SIZE, BLACK);
+
 			for (uint32_t i = 0; i < plants_count; ++i)
 				plant_render(&plants[i]);
 			raft_render(&raft);
 			player_render(&player, WIDTH, HEIGHT);
 			kalipso_render(&kalipso);
-
-#define TIME_FONT_SIZE 22
-			const char *time_str = TextFormat("%.1fs ELAPSED", time_elapsed);
-			DrawText(time_str, WIDTH - MeasureText(time_str, TIME_FONT_SIZE) - 10, 10, TIME_FONT_SIZE, BLACK);
 
 			if (kalipso.suspicion >= SUSPICION_MAX) {
 				const char *game_over_caught_str = "Kalipso caught you trying to escape!";
@@ -122,7 +130,7 @@ int main(void)
 				);
 			}
 			else if (player.state == PLAYER_ESCAPED) {
-				const char *win_str = TextFormat("You managed to escape in %.1f seconds!");
+				const char *win_str = TextFormat("You managed to escape in %.1f seconds!", time_elapsed);
 				DrawText(
 					win_str,
 					WIDTH / 2.0f - MeasureText(win_str, GAME_OVER_FONT_SIZE) / 2.0f,
