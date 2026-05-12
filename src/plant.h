@@ -17,6 +17,6 @@ typedef struct {
 } Plant;
 
 Plant plant_create(PlantType type, float x, float y);
-void plant_render(const Plant *plant);
+void plant_render(const Plant *plant, const Texture *textures);
 
 #endif // MATERIAL_H

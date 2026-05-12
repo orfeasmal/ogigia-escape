@@ -1,13 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "util.h"
 #include "plant.h"
 
-#define TREE_WIDTH 25.0f
-#define TREE_HEIGHT 50.0f
+#define TREE_WIDTH 60.0f
+#define TREE_HEIGHT (TREE_WIDTH * 2.0f)
 
-#define WEED_WIDTH 20.0f
-#define WEED_HEIGHT 20.0f
+#define WEED_WIDTH 30.0f
+#define WEED_HEIGHT WEED_WIDTH
 
 #define TREE_COLOR GREEN
 #define WEED_COLOR LIME
@@ -47,7 +48,18 @@ Plant plant_create(PlantType type, float x, float y)
 	return p;
 }
 
-void plant_render(const Plant *p)
+void plant_render(const Plant *p, const Texture *textures)
 {
-	DrawRectangleRec(p->body, p->color);
+	const Texture *texture = NULL;
+
+	if (p->type == PLANT_TREE)
+		texture = &textures[TEXTURE_TREE];
+	else if (p->type == PLANT_WEED)
+		texture = &textures[TEXTURE_WEED];
+
+	Rectangle texture_rect = {
+		.width = texture->width,
+		.height = texture->height
+	};
+	DrawTexturePro(*texture, texture_rect, p->body, (Vector2) { 0 }, 0.0f, WHITE);
 }

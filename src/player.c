@@ -8,8 +8,8 @@
 
 #include <raymath.h>
 
-#define PLAYER_WIDTH 35.0f
-#define PLAYER_HEIGHT 75.0f
+#define PLAYER_WIDTH 45.0f
+#define PLAYER_HEIGHT (PLAYER_WIDTH * 2.0f)
 #define PLAYER_COLOR VIOLET
 
 #define MAX_ITEMS_IN_POSSESION 5
@@ -190,7 +190,7 @@ void player_update(
 
 #define ITEM_COUNTER_FONT_SIZE 30
 
-void player_render(const Player *p, uint32_t window_width, uint32_t window_height)
+void player_render(const Player *p, const Texture *textures, uint32_t window_width, uint32_t window_height)
 {
 	if (p->state == PLAYER_PICKING_PLANT || p->state == PLAYER_DEPOSITING_TO_RAFT) {
 		Rectangle timer_bar_outline = {
@@ -226,7 +226,14 @@ void player_render(const Player *p, uint32_t window_width, uint32_t window_heigh
 		}
 	}
 
-	DrawRectangleRec(p->body, p->color);
+	const Texture *player_texture = &textures[TEXTURE_PLAYER];
+
+	Rectangle texture_rect = {
+		.width = player_texture->width,
+		.height = player_texture->height
+	};
+
+	DrawTexturePro(*player_texture, texture_rect, p->body, (Vector2) { 0 }, 0.0f, WHITE);
 
 	const char *wood_counter_str = TextFormat("WOOD: %u", p->plants_in_possesion[PLANT_TREE]);
 	DrawText(wood_counter_str, 10, window_height - (ITEM_COUNTER_FONT_SIZE + 10) * 2, ITEM_COUNTER_FONT_SIZE, BLACK);

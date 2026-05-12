@@ -12,8 +12,8 @@
 
 #define DIALOGUE_FILE_PATH "assets/dialogue.json"
 
-#define KALIPSO_WIDTH 35.0f
-#define KALIPSO_HEIGHT 65.0f
+#define KALIPSO_WIDTH 40.0f
+#define KALIPSO_HEIGHT (KALIPSO_WIDTH * 2.0f)
 #define KALIPSO_COLOR RAYWHITE
 
 #define COOLDOWN 4.0f
@@ -196,7 +196,7 @@ void kalipso_update(Kalipso *k, Player *player, const Sound *sounds, float time_
 
 #define SUSPICION_BAR_COLOR RED
 
-void kalipso_render(const Kalipso *k)
+void kalipso_render(const Kalipso *k, const Texture *textures)
 {
 	if (k->suspicion > 0) {
 		Rectangle suspicion_bar_outline = {
@@ -213,7 +213,14 @@ void kalipso_render(const Kalipso *k)
 		DrawRectangleLinesEx(suspicion_bar_outline, 2.0f, BLACK);
 	}
 
-	DrawRectangleRec(k->body, k->color);
+	const Texture *kalipso_texture = &textures[TEXTURE_KALIPSO];
+
+	Rectangle texture_rect = {
+		.width = kalipso_texture->width,
+		.height = kalipso_texture->height
+	};
+
+	DrawTexturePro(*kalipso_texture, texture_rect, k->body, (Vector2) { 0 }, 0.0f, WHITE);
 
 	if (k->state != KALIPSO_QUESTIONING)
 		return;

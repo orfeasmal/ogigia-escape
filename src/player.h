@@ -47,6 +47,6 @@ void player_update(
 	uint32_t window_height,
 	float time_step
 );
-void player_render(const Player *player, uint32_t window_width, uint32_t window_height);
+void player_render(const Player *player, const Texture *textures, uint32_t window_width, uint32_t window_height);
 
 #endif // PLAYER_H

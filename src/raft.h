@@ -17,6 +17,6 @@ typedef struct {
 } Raft;
 
 Raft raft_create(uint32_t window_height, Rectangle ocean);
-void raft_render(const Raft *raft);
+void raft_render(const Raft *raft, const Texture *textures);
 
 #endif // RAFT_H

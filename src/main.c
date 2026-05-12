@@ -7,6 +7,13 @@
 #include "player.h"
 #include "kalipso.h"
 
+#define TEXTURE_BACKGROUND_PATH "assets/textures/background.png"
+#define TEXTURE_PLAYER_PATH "assets/textures/player.png"
+#define TEXTURE_KALIPSO_PATH "assets/textures/kalipso.png"
+#define TEXTURE_TREE_PATH "assets/textures/tree.png"
+#define TEXTURE_WEED_PATH "assets/textures/weed.png"
+#define TEXTURE_RAFT_PATH "assets/textures/raft.png"
+
 #define SOUND_BACKGROUND_PATH "assets/audio/background.wav"
 #define SOUND_PLAYER_TALKING_PATH "assets/audio/player_talking.wav"
 #define SOUND_KALIPSO_TALKING_LOW_SUSPICION_PATH "assets/audio/kalipso_talking_low_suspicion.wav"
@@ -33,6 +40,14 @@ int main(void)
 {
 	InitWindow(WIDTH, HEIGHT, TITLE);
 	InitAudioDevice();
+
+	Texture textures[TEXTURE_ENUM_COUNT] = { 0 };
+	textures[TEXTURE_BACKGROUND] = LoadTexture(TEXTURE_BACKGROUND_PATH);
+	textures[TEXTURE_PLAYER] = LoadTexture(TEXTURE_PLAYER_PATH);
+	textures[TEXTURE_KALIPSO] = LoadTexture(TEXTURE_KALIPSO_PATH);
+	textures[TEXTURE_TREE] = LoadTexture(TEXTURE_TREE_PATH);
+	textures[TEXTURE_WEED] = LoadTexture(TEXTURE_WEED_PATH);
+	textures[TEXTURE_RAFT] = LoadTexture(TEXTURE_RAFT_PATH);
 
 	Sound sounds[SOUND_ENUM_COUNT] = { 0 };
 	sounds[SOUND_PLAYER_TALKING] = LoadSound(SOUND_PLAYER_TALKING_PATH);
@@ -85,8 +100,8 @@ int main(void)
 				kalipso_update(&kalipso, &player, sounds, time_step);
 
 				if (plants_count < PLANT_COUNT) {
-					plants[plants_count++] = plant_create(PLANT_TREE, GetRandomValue(0, WIDTH - ocean.width - 50.0f), GetRandomValue(0, HEIGHT));
-					plants[plants_count++] = plant_create(PLANT_WEED, GetRandomValue(0, WIDTH - ocean.width - 50.0f), GetRandomValue(0, HEIGHT));
+					plants[plants_count++] = plant_create(PLANT_TREE, GetRandomValue(0, WIDTH - ocean.width - 100.0f), GetRandomValue(0, HEIGHT));
+					plants[plants_count++] = plant_create(PLANT_WEED, GetRandomValue(0, WIDTH - ocean.width - 100.0f), GetRandomValue(0, HEIGHT));
 				}
 			}
 			else {
@@ -98,6 +113,13 @@ int main(void)
 			ClearBackground(YELLOW);
 			BeginDrawing();
 
+			//const Texture *background_texture = &textures[TEXTURE_BACKGROUND];
+			//Rectangle texture_rect = {
+			//	.width = background_texture->width,
+			//	.height = background_texture->height
+			//};
+			//DrawTexturePro(*background_texture, texture_rect, (Rectangle) { .width = WIDTH, .height = HEIGHT }, (Vector2) { 0 }, 0.0f, WHITE);
+
 			DrawRectangleRec(ocean, BLUE);
 
 #define TIME_FONT_SIZE 22
@@ -105,10 +127,10 @@ int main(void)
 			DrawText(time_str, WIDTH - MeasureText(time_str, TIME_FONT_SIZE) - 10, 10, TIME_FONT_SIZE, BLACK);
 
 			for (uint32_t i = 0; i < plants_count; ++i)
-				plant_render(&plants[i]);
-			raft_render(&raft);
-			player_render(&player, WIDTH, HEIGHT);
-			kalipso_render(&kalipso);
+				plant_render(&plants[i], textures);
+			raft_render(&raft, textures);
+			player_render(&player, textures, WIDTH, HEIGHT);
+			kalipso_render(&kalipso, textures);
 
 			if (kalipso.suspicion >= SUSPICION_MAX) {
 				const char *game_over_caught_str = "Kalipso caught you trying to escape!";
@@ -157,6 +179,9 @@ int main(void)
 
 	for (uint32_t i = 0; i < SOUND_ENUM_COUNT; ++i)
 		UnloadSound(sounds[i]);
+
+	for (uint32_t i = 0; i < TEXTURE_ENUM_COUNT; ++i)
+		UnloadTexture(textures[i]);
 
 	CloseAudioDevice();
 	CloseWindow();
