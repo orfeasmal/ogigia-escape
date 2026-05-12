@@ -65,8 +65,27 @@ int main(void)
 	SetSoundVolume(sounds[SOUND_BACKGROUND], 0.2f);
 
 	while (!WindowShouldClose()) {
-		float time_elapsed = 0.0f;
+		if (IsKeyPressed(KEY_SPACE))
+			break;
+
+		ClearBackground(BLACK);
+		BeginDrawing();
+
+		DrawText("You are Odysseus and you have been imprisoned by Kalipso", 10, 10, 40, WHITE);
+		DrawText("in the island of Ogigia for 7 years.", 10, 10 + (40 + 5) * 1, 40, WHITE);
+		DrawText("You must collect the sufficient materials in order to build a", 10, 10 + (40 + 5) * 2, 40, WHITE);
+		DrawText("raft and escape.", 10, 10 + (40 + 5) * 3, 40, WHITE);
+		DrawText("Kalipso Will be asking you questions about your behaviour,", 10, 10 + (40 + 5) * 4, 40, WHITE);
+		DrawText("she must not catch up to your plan.", 10, 10 + (40 + 5) * 5, 40, WHITE);
+		DrawText("PRESS 'SPACE' TO BEGIN", 10, 10 + (40 + 5) * 6, 40, WHITE);
+
+		EndDrawing();
+	}
+
+	while (!WindowShouldClose()) {
 		bool should_restart = false;
+
+		float time_elapsed = 0.0f;
 
 		Rectangle ocean = {
 			.x = WIDTH - 200.0f,
