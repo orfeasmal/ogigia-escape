@@ -18,9 +18,9 @@ typedef struct {
 } Answer;
 
 typedef enum {
-	KALIPSOS_CHASING_PLAYER,
-	KALIPSOS_QUESTIONING
-} KalipsosState;
+	KALIPSO_CHASING_PLAYER,
+	KALIPSO_QUESTIONING
+} KalipsoState;
 
 typedef struct {
 	Rectangle body;
@@ -34,14 +34,14 @@ typedef struct {
 
 	float timer;
 
-	KalipsosState state;
+	KalipsoState state;
 	PlayerState player_prev_state;
 	uint8_t suspicion;
-} Kalipsos;
+} Kalipso;
 
-Kalipsos kalipsos_create(float x, float y);
-void kalipsos_destroy(Kalipsos *kalipsos);
-void kalipsos_update(Kalipsos *kalipsos, Player *player, float time_step);
-void kalipsos_render(const Kalipsos *kalipsos);
+Kalipso kalipso_create(float x, float y);
+void kalipso_destroy(Kalipso *kalipso);
+void kalipso_update(Kalipso *kalipso, Player *player, float time_step);
+void kalipso_render(const Kalipso *kalipso);
 
 #endif // KALIPSO_H

@@ -16,6 +16,8 @@ typedef enum {
 } PlayerState;
 
 typedef struct {
+	uint32_t plants_in_possesion[PLANT_COUNT];
+
 	Rectangle body;
 
 	PlayerState state;
@@ -29,8 +31,6 @@ typedef struct {
 
 	uint32_t plants_that_can_be_interacted_with;
 	bool can_interact_with_raft;
-
-	uint32_t plants_in_possesion[PLANT_COUNT];
 } Player;
 
 Player player_create(float x, float y);
@@ -40,6 +40,7 @@ void player_update(
 	uint32_t *plants_count,
 	Raft *raft,
 	Rectangle ocean,
+	Sound *sounds,
 	uint32_t window_height,
 	float time_step
 );

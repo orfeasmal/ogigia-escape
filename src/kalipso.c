@@ -5,23 +5,23 @@
 #define JSIMPLON_IMPLEMENTATION
 #include <jsimplon.h>
 
-#include "kalipsos.h"
+#include "kalipso.h"
 
 #include <raymath.h>
 
 #define DIALOGUE_FILE_PATH "assets/dialogue.json"
 
-#define KALIPSOS_WIDTH 35.0f
-#define KALIPSOS_HEIGHT 65.0f
-#define KALIPSOS_COLOR WHITE
+#define KALIPSO_WIDTH 35.0f
+#define KALIPSO_HEIGHT 65.0f
+#define KALIPSO_COLOR WHITE
 
 #define COOLDOWN 3.0f
 
-#define QUESTION_FONT_SIZE 50
+#define QUESTION_FONT_SIZE 35
 #define ANSWER_FONT_SIZE 30
 #define ANSWER_SEPARATION 10
 
-Kalipsos kalipsos_create(float x, float y)
+Kalipso kalipso_create(float x, float y)
 {
 	char *json_error;
 	Jsimplon_Value *json_root_value = jsimplon_tree_from_file(&json_error, DIALOGUE_FILE_PATH);
@@ -33,38 +33,38 @@ Kalipsos kalipsos_create(float x, float y)
 		exit(EXIT_FAILURE);
 	}
 
-	return (Kalipsos) {
+	return (Kalipso) {
 		.body = {
 			.x = x,
 			.y = y,
-			.width = KALIPSOS_WIDTH,
-			.height = KALIPSOS_HEIGHT
+			.width = KALIPSO_WIDTH,
+			.height = KALIPSO_HEIGHT
 		},
 		.json_root_value = json_root_value,
-		.color = KALIPSOS_COLOR,
+		.color = KALIPSO_COLOR,
 		.timer = COOLDOWN
 	};
 }
 
-void kalipsos_destroy(Kalipsos *k)
+void kalipso_destroy(Kalipso *k)
 {
 	jsimplon_tree_destroy(k->json_root_value);
-	*k = (Kalipsos) { 0 };
+	*k = (Kalipso) { 0 };
 }
 
-#define SPEED 100.0f
+#define SPEED 80.0f
 #define QUESTION_TRIGGER_DISTANCE 125
 
-void kalipsos_update(Kalipsos *k, Player *player, float time_step)
+void kalipso_update(Kalipso *k, Player *player, float time_step)
 {
-	if (k->state == KALIPSOS_CHASING_PLAYER && k->timer >= COOLDOWN) {
-		Vector2 player_minus_kalipsos_pos = (Vector2) {
+	if (k->state == KALIPSO_CHASING_PLAYER && k->timer >= COOLDOWN) {
+		Vector2 player_minus_kalipso_pos = (Vector2) {
 			.x = (player->body.x + player->body.width / 2.0f) - (k->body.x + k->body.width / 2.0f),
 			.y = (player->body.y + player->body.height / 2.0f) - (k->body.y + k->body.height / 2.0f)
 		};
-		float distance_from_player = Vector2Length(player_minus_kalipsos_pos);
+		float distance_from_player = Vector2Length(player_minus_kalipso_pos);
 
-		k->vel = Vector2Scale(player_minus_kalipsos_pos, SPEED / distance_from_player);
+		k->vel = Vector2Scale(player_minus_kalipso_pos, SPEED / distance_from_player);
 
 		k->body.x += k->vel.x * time_step;
 		k->body.y += k->vel.y * time_step;
@@ -72,7 +72,7 @@ void kalipsos_update(Kalipsos *k, Player *player, float time_step)
 		if (distance_from_player <= QUESTION_TRIGGER_DISTANCE) {
 			k->player_prev_state = player->state;
 
-			k->state = KALIPSOS_QUESTIONING;
+			k->state = KALIPSO_QUESTIONING;
 			player->state = PLAYER_BEING_QUESTIONED;
 
 			k->vel = (Vector2) { 0.0f };
@@ -91,7 +91,7 @@ void kalipsos_update(Kalipsos *k, Player *player, float time_step)
 					else if (player->plant_being_picked_type == PLANT_WEED)
 						json_temp_object = jsimplon_object_member_get_object(json_temp_object, "weed");
 					else {
-						fprintf(stderr, "internal error: unreachable plant type in kalipsos_update\n");
+						fprintf(stderr, "internal error: unreachable plant type in kalipso_update\n");
 						exit(EXIT_FAILURE);
 					}
 					break;
@@ -99,7 +99,7 @@ void kalipsos_update(Kalipsos *k, Player *player, float time_step)
 					json_temp_object = jsimplon_object_member_get_object(json_temp_object, "raft");
 					break;
 				default:
-					fprintf(stderr, "internal error: unreachable player state in kalipsos_update\n");
+					fprintf(stderr, "internal error: unreachable player state in kalipso_update\n");
 					break;
 			}
 
@@ -157,7 +157,7 @@ void kalipsos_update(Kalipsos *k, Player *player, float time_step)
 			}
 		}
 	}
-	else if (k->state == KALIPSOS_QUESTIONING) {
+	else if (k->state == KALIPSO_QUESTIONING) {
 		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
 			for (uint32_t i = 0; i < k->answers_count; ++i) {
 				Answer answer = k->answers[i];
@@ -168,7 +168,7 @@ void kalipsos_update(Kalipsos *k, Player *player, float time_step)
 
 					memset(k->answers, 0, ANSWERS_MAX_COUNT * sizeof(*k->answers));
 
-					k->state = KALIPSOS_CHASING_PLAYER;
+					k->state = KALIPSO_CHASING_PLAYER;
 					player->state = k->player_prev_state;
 				}
 			}
@@ -183,7 +183,7 @@ void kalipsos_update(Kalipsos *k, Player *player, float time_step)
 
 #define SUSPICION_BAR_COLOR RED
 
-void kalipsos_render(const Kalipsos *k)
+void kalipso_render(const Kalipso *k)
 {
 	if (k->suspicion > 0) {
 		Rectangle suspicion_bar_outline = {
@@ -194,7 +194,7 @@ void kalipsos_render(const Kalipsos *k)
 		};
 
 		Rectangle suspicion_bar = suspicion_bar_outline;
-		suspicion_bar.width *= (float)k->suspicion / SUSPICION_MAX;
+		suspicion_bar.width *= fminf((float)k->suspicion / SUSPICION_MAX, 1.0f);
 
 		DrawRectangleRec(suspicion_bar, SUSPICION_BAR_COLOR);
 		DrawRectangleLinesEx(suspicion_bar_outline, 2.0f, BLACK);
@@ -202,10 +202,10 @@ void kalipsos_render(const Kalipsos *k)
 
 	DrawRectangleRec(k->body, k->color);
 
-	if (k->state != KALIPSOS_QUESTIONING)
+	if (k->state != KALIPSO_QUESTIONING)
 		return;
 
-	DrawText(k->question, ANSWER_SEPARATION, 0, QUESTION_FONT_SIZE, BLACK);
+	DrawText(k->question, ANSWER_SEPARATION, ANSWER_SEPARATION, QUESTION_FONT_SIZE, BLACK);
 
 	for (uint32_t i = 0; i < k->answers_count; ++i) {
 		Answer answer = k->answers[i];

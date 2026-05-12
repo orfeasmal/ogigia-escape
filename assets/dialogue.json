@@ -21,6 +21,69 @@
 						"answer": "I am planning my escape."
 					}
 				]
+			},
+			{
+				"question": "How are you?",
+				"answers": [
+					{
+						"suspiciousness": 1,
+						"answer": "I'm okay, just a bit a bored."
+					},
+					{
+						"suspiciousness": 3,
+						"answer": "Fine."
+					},
+					{
+						"suspiciousness": 7,
+						"answer": "Leave me alone!"
+					},
+					{
+						"suspiciousness": 10,
+						"answer": "Great, because I am going to get out of here soon!"
+					}
+				]
+			},
+			{
+				"question": "What's up?",
+				"answers": [
+					{
+						"suspiciousness": 1,
+						"answer": "All good, just wandering around."
+					},
+					{
+						"suspiciousness": 3,
+						"answer": "The sky."
+					},
+					{
+						"suspiciousness": 7,
+						"answer": "Get away from me!"
+					},
+					{
+						"suspiciousness": 10,
+						"answer": "I am trying to figure out how to make my glorious escape!"
+					}
+				]
+			},
+			{
+				"question": "Quick! what's 2 + 2?",
+				"answers": [
+					{
+						"suspiciousness": 1,
+						"answer": "4!"
+					},
+					{
+						"suspiciousness": 3,
+						"answer": "5, it always has been."
+					},
+					{
+						"suspiciousness": 7,
+						"answer": "What? Are you stupid?"
+					},
+					{
+						"suspiciousness": 10,
+						"answer": "Well, 2 logs and another 2 logs gives us a nice boat!"
+					}
+				]
 			}
 		],
 
@@ -45,10 +108,94 @@
 						"answer": "You are onto me, it seems."
 					}
 				]
+			},
+			{
+				"question": "Hmmm, something about you seems off today.",
+				"answers": [
+					{
+						"suspiciousness": 3,
+						"answer": "Why, I'm just minding my own business."
+					},
+					{
+						"suspiciousness": 8,
+						"answer": "Yes, because you've been up my ass for the last hour."
+					},
+					{
+						"suspiciousness": 12,
+						"answer": "You're starting to catch up it seems."
+					},
+					{
+						"suspiciousness": 15,
+						"answer": "Maybe, but I won't stay here for much longer so don't worry."
+					}
+				]
+			},
+			{
+				"question": "I don't have a good feeling about the things you've been telling me.",
+				"answers": [
+					{
+						"suspiciousness": 3,
+						"answer": "Eh well, it's probably just a misunderstanding."
+					},
+					{
+						"suspiciousness": 8,
+						"answer": "Don't worry about it."
+					},
+					{
+						"suspiciousness": 12,
+						"answer": "You and your paranoid thoughts are really starting to get to me."
+					},
+					{
+						"suspiciousness": 15,
+						"answer": "You're right to feel like that! You're not so stupid afterall."
+					}
+				]
 			}
 		],
 
 		"suspicion <= 99": [
+			{
+				"question": "I'm sure you're up to no good. Explain yourself.",
+				"answers": [
+					{
+						"suspiciousness": 5,
+						"answer": "I'll explain everything in just a moment, I'm a little busy."
+					},
+					{
+						"suspiciousness": 12,
+						"answer": "You'll eventually see this is all a big misunderstanding."
+					},
+					{
+						"suspiciousness": 15,
+						"answer": "I don't have to explain anything to you!"
+					},
+					{
+						"suspiciousness": 20,
+						"answer": "I'll say it loud and clear: I'm. Getting. Out. Of. Here. Understand?"
+					}
+				]
+			},
+			{
+				"question": "I've had enough of your shenaningans! Tell me what's going on!",
+				"answers": [
+					{
+						"suspiciousness": 5,
+						"answer": "Nothing, I'm just having a bad day!"
+					},
+					{
+						"suspiciousness": 12,
+						"answer": "Watch your mouth!"
+					},
+					{
+						"suspiciousness": 15,
+						"answer": "I'm not telling you anything."
+					},
+					{
+						"suspiciousness": 20,
+						"answer": "Haven't I told you already? I'm trying to get out of here ASAP!"
+					}
+				]
+			}
 		]
 	},
 

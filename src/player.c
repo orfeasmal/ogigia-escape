@@ -1,7 +1,9 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
+#include "util.h"
 #include "player.h"
 
 #include <raymath.h>
@@ -9,6 +11,8 @@
 #define PLAYER_WIDTH 35.0f
 #define PLAYER_HEIGHT 75.0f
 #define PLAYER_COLOR VIOLET
+
+#define MAX_ITEMS_IN_POSSESION 5
 
 #define SPEED 200.0f
 
@@ -19,7 +23,7 @@ static int32_t max(int32_t a, int32_t b);
 
 Player player_create(float x, float y)
 {
-	return (Player) {
+	Player p = {
 		.body = {
 			.width = PLAYER_WIDTH,
 			.height = PLAYER_HEIGHT,
@@ -28,6 +32,8 @@ Player player_create(float x, float y)
 		},
 		.color = PLAYER_COLOR,
 	};
+
+	return p;
 }
 
 void player_update(
@@ -36,6 +42,7 @@ void player_update(
 	uint32_t *plants_count,
 	Raft *raft,
 	Rectangle ocean,
+	Sound *sounds,
 	uint32_t window_height,
 	float time_step
 )
@@ -56,7 +63,11 @@ void player_update(
 			if (distance_from_plant <= p->body.width * 2.5f) {
 				++p->plants_that_can_be_interacted_with;
 
-				if (IsKeyPressed(KEY_E)) {
+				uint32_t items_in_possesion_total = 0;
+				for (uint32_t i = 0; i < PLANT_COUNT; ++i)
+					items_in_possesion_total += p->plants_in_possesion[i];
+
+				if (IsKeyPressed(KEY_E) && items_in_possesion_total < MAX_ITEMS_IN_POSSESION) {
 					p->plant_being_picked_type = plant->type;
 					p->plant_being_picked_index = i;
 
@@ -89,24 +100,59 @@ void player_update(
 		else
 			p->can_interact_with_raft = false;
 
+		Vector2 velocity = { 0 };
+
 		if (IsKeyDown(KEY_W) && p->body.y >= 0)
-			p->body.y -= SPEED * time_step;
+			velocity.y = -SPEED;
 		if (IsKeyDown(KEY_S) && p->body.y + p->body.height < window_height)
-			p->body.y += SPEED * time_step;
+			velocity.y = SPEED;
 		if (IsKeyDown(KEY_A) && p->body.x >= 0)
-			p->body.x -= SPEED * time_step;
+			velocity.x = -SPEED;
 		if (IsKeyDown(KEY_D) && p->body.x + p->body.width < ocean.x)
-			p->body.x += SPEED * time_step;
+			velocity.x = SPEED;
+
+		p->body.x += velocity.x * time_step;
+		p->body.y += velocity.y * time_step;
+
+		if (memcmp(&velocity, &(Vector2) { 0 }, sizeof(velocity)) != 0) {
+			if (!IsSoundPlaying(sounds[SOUND_PLAYER_WALKING]))
+				PlaySound(sounds[SOUND_PLAYER_WALKING]);
+		}
+		else
+			StopSound(sounds[SOUND_PLAYER_WALKING]);
 	}
 	else if (p->state == PLAYER_PICKING_PLANT) {
+		StopSound(sounds[SOUND_PLAYER_WALKING]);
+
 		if (p->timer >= p->current_cooldown) {
+			if (p->plant_being_picked_type == PLANT_TREE) {
+				StopSound(sounds[SOUND_TREE_BREAKING]);
+				PlaySound(sounds[SOUND_TREE_BROKEN]);
+			}
+			else if (p->plant_being_picked_type == PLANT_WEED) {
+				StopSound(sounds[SOUND_WEED_BREAKING]);
+				PlaySound(sounds[SOUND_WEED_BROKEN]);
+			}
+
 			++p->plants_in_possesion[p->plant_being_picked_type];
 			plants[p->plant_being_picked_index] = plants[--(*plants_count)];
 
 			p->state = PLAYER_DOING_NOTHING;
 		}
+		else {
+			if (p->plant_being_picked_type == PLANT_TREE) {
+				if (!IsSoundPlaying(sounds[SOUND_TREE_BREAKING]))
+					PlaySound(sounds[SOUND_TREE_BREAKING]);
+			}
+			else if (p->plant_being_picked_type == PLANT_WEED) {
+				if (!IsSoundPlaying(sounds[SOUND_WEED_BREAKING]))
+					PlaySound(sounds[SOUND_WEED_BREAKING]);
+			}
+		}
 	}
 	else if (p->state == PLAYER_DEPOSITING_TO_RAFT) {
+		StopSound(sounds[SOUND_PLAYER_WALKING]);
+
 		if (p->timer >= p->current_cooldown) {
 			for (uint32_t i = 0; i < PLANT_COUNT; ++i) {
 				raft->plants_needed_to_be_built[i] -= p->plants_in_possesion[i];
@@ -116,6 +162,11 @@ void player_update(
 
 			p->state = PLAYER_DOING_NOTHING;
 		}
+	}
+	else if (p->state == PLAYER_BEING_QUESTIONED) {
+		StopSound(sounds[SOUND_PLAYER_WALKING]);
+		StopSound(sounds[SOUND_TREE_BREAKING]);
+		StopSound(sounds[SOUND_WEED_BREAKING]);
 	}
 
 	if (p->state != PLAYER_BEING_QUESTIONED)
@@ -149,7 +200,16 @@ void player_render(const Player *p, uint32_t window_width, uint32_t window_heigh
 			DrawText(str, p->body.x + p->body.width / 2.0f - MeasureText(str, TIMER_BAR_HEIGHT) / 2.0f, p->body.y + p->body.height + 10, TIMER_BAR_HEIGHT, BLACK);
 		}
 		else if (p->plants_that_can_be_interacted_with > 0) {
-			const char *str = "Press 'E' to collect";
+			uint32_t items_in_possesion_total = 0;
+			for (uint32_t i = 0; i < PLANT_COUNT; ++i)
+				items_in_possesion_total += p->plants_in_possesion[i];
+
+			const char *str;
+			if (items_in_possesion_total < MAX_ITEMS_IN_POSSESION)
+				str = "Press 'E' to collect";
+			else
+				str = "Reached inventory limit, deposit to raft";
+
 			DrawText(str, p->body.x + p->body.width / 2.0f - MeasureText(str, TIMER_BAR_HEIGHT) / 2.0f, p->body.y + p->body.height + 10, TIMER_BAR_HEIGHT, BLACK);
 		}
 	}

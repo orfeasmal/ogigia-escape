@@ -17,7 +17,7 @@
 
 Plant plant_create(PlantType type, float x, float y)
 {
-	Plant plant = {
+	Plant p = {
 		.body = {
 			.x = x,
 			.y = y,
@@ -27,16 +27,16 @@ Plant plant_create(PlantType type, float x, float y)
 
 	switch (type) {
 		case PLANT_TREE:
-			plant.body.width = TREE_WIDTH;
-			plant.body.height = TREE_HEIGHT;
-			plant.color = TREE_COLOR;
-			plant.time_needed_to_pick = TREE_TIME;
+			p.body.width = TREE_WIDTH;
+			p.body.height = TREE_HEIGHT;
+			p.color = TREE_COLOR;
+			p.time_needed_to_pick = TREE_TIME;
 			break;
 		case PLANT_WEED:
-			plant.body.width = WEED_WIDTH;
-			plant.body.height = WEED_HEIGHT;
-			plant.color = WEED_COLOR;
-			plant.time_needed_to_pick = WEED_TIME;
+			p.body.width = WEED_WIDTH;
+			p.body.height = WEED_HEIGHT;
+			p.color = WEED_COLOR;
+			p.time_needed_to_pick = WEED_TIME;
 			break;
 		default:
 			fprintf(stderr, "internal error: unreachable plant type in plant_create\n");
@@ -44,7 +44,7 @@ Plant plant_create(PlantType type, float x, float y)
 			break;
 	}
 
-	return plant;
+	return p;
 }
 
 void plant_render(const Plant *p)
