@@ -14,7 +14,8 @@
 
 #define MAX_ITEMS_IN_POSSESION 5
 
-#define SPEED 200.0f
+#define PLAYER_SPEED 200.0f
+#define RAFT_SPEED 100.0f
 
 #define TREE_TIME 5.0f
 #define WEED_TIME 2.0f
@@ -42,7 +43,8 @@ void player_update(
 	uint32_t *plants_count,
 	Raft *raft,
 	Rectangle ocean,
-	Sound *sounds,
+	const Sound *sounds,
+	uint32_t window_width,
 	uint32_t window_height,
 	float time_step
 )
@@ -103,13 +105,13 @@ void player_update(
 		Vector2 velocity = { 0 };
 
 		if (IsKeyDown(KEY_W) && p->body.y >= 0)
-			velocity.y = -SPEED;
+			velocity.y = -PLAYER_SPEED;
 		if (IsKeyDown(KEY_S) && p->body.y + p->body.height < window_height)
-			velocity.y = SPEED;
+			velocity.y = PLAYER_SPEED;
 		if (IsKeyDown(KEY_A) && p->body.x >= 0)
-			velocity.x = -SPEED;
+			velocity.x = -PLAYER_SPEED;
 		if (IsKeyDown(KEY_D) && p->body.x + p->body.width < ocean.x)
-			velocity.x = SPEED;
+			velocity.x = PLAYER_SPEED;
 
 		p->body.x += velocity.x * time_step;
 		p->body.y += velocity.y * time_step;
@@ -154,19 +156,29 @@ void player_update(
 		StopSound(sounds[SOUND_PLAYER_WALKING]);
 
 		if (p->timer >= p->current_cooldown) {
+			PlaySound(sounds[SOUND_DEPOSITED_TO_RAFT]);
+
+			int32_t plants_left_to_build_raft = 0;
 			for (uint32_t i = 0; i < PLANT_COUNT; ++i) {
 				raft->plants_needed_to_be_built[i] -= p->plants_in_possesion[i];
-				raft->plants_needed_to_be_built[i] = max(raft->plants_needed_to_be_built[i], 0);
+				plants_left_to_build_raft += (raft->plants_needed_to_be_built[i] = max(raft->plants_needed_to_be_built[i], 0));
 				p->plants_in_possesion[i] = 0;
 			}
 
-			p->state = PLAYER_DOING_NOTHING;
+			if (plants_left_to_build_raft <= 0)
+				p->state = PLAYER_ESCAPING;
+			else
+				p->state = PLAYER_DOING_NOTHING;
 		}
 	}
-	else if (p->state == PLAYER_BEING_QUESTIONED) {
-		StopSound(sounds[SOUND_PLAYER_WALKING]);
-		StopSound(sounds[SOUND_TREE_BREAKING]);
-		StopSound(sounds[SOUND_WEED_BREAKING]);
+	else if (p->state == PLAYER_ESCAPING) {
+		if (raft->body.x <= window_width) {
+			raft->body.x += RAFT_SPEED * time_step;
+			p->body.x = raft->body.x + raft->body.width / 2.0f - p->body.width / 2.0f;
+			p->body.y = raft->body.y - p->body.height / 2.0f;
+		}
+		else
+			p->state = PLAYER_ESCAPED;
 	}
 
 	if (p->state != PLAYER_BEING_QUESTIONED)

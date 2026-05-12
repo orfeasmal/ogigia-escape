@@ -5,6 +5,7 @@
 #define JSIMPLON_IMPLEMENTATION
 #include <jsimplon.h>
 
+#include "util.h"
 #include "kalipso.h"
 
 #include <raymath.h>
@@ -13,9 +14,9 @@
 
 #define KALIPSO_WIDTH 35.0f
 #define KALIPSO_HEIGHT 65.0f
-#define KALIPSO_COLOR WHITE
+#define KALIPSO_COLOR RAYWHITE
 
-#define COOLDOWN 3.0f
+#define COOLDOWN 4.0f
 
 #define QUESTION_FONT_SIZE 35
 #define ANSWER_FONT_SIZE 30
@@ -41,8 +42,8 @@ Kalipso kalipso_create(float x, float y)
 			.height = KALIPSO_HEIGHT
 		},
 		.json_root_value = json_root_value,
-		.color = KALIPSO_COLOR,
-		.timer = COOLDOWN
+		.timer = COOLDOWN / 2.0f,
+		.color = KALIPSO_COLOR
 	};
 }
 
@@ -55,7 +56,7 @@ void kalipso_destroy(Kalipso *k)
 #define SPEED 80.0f
 #define QUESTION_TRIGGER_DISTANCE 125
 
-void kalipso_update(Kalipso *k, Player *player, float time_step)
+void kalipso_update(Kalipso *k, Player *player, const Sound *sounds, float time_step)
 {
 	if (k->state == KALIPSO_CHASING_PLAYER && k->timer >= COOLDOWN) {
 		Vector2 player_minus_kalipso_pos = (Vector2) {
@@ -70,6 +71,10 @@ void kalipso_update(Kalipso *k, Player *player, float time_step)
 		k->body.y += k->vel.y * time_step;
 
 		if (distance_from_player <= QUESTION_TRIGGER_DISTANCE) {
+			StopSound(sounds[SOUND_PLAYER_WALKING]);
+			StopSound(sounds[SOUND_TREE_BREAKING]);
+			StopSound(sounds[SOUND_WEED_BREAKING]);
+
 			k->player_prev_state = player->state;
 
 			k->state = KALIPSO_QUESTIONING;
@@ -205,7 +210,7 @@ void kalipso_render(const Kalipso *k)
 	if (k->state != KALIPSO_QUESTIONING)
 		return;
 
-	DrawText(k->question, ANSWER_SEPARATION, ANSWER_SEPARATION, QUESTION_FONT_SIZE, BLACK);
+	DrawText(k->question, ANSWER_SEPARATION, ANSWER_SEPARATION / 2.0f, QUESTION_FONT_SIZE, BLACK);
 
 	for (uint32_t i = 0; i < k->answers_count; ++i) {
 		Answer answer = k->answers[i];

@@ -41,7 +41,7 @@ typedef struct {
 
 Kalipso kalipso_create(float x, float y);
 void kalipso_destroy(Kalipso *kalipso);
-void kalipso_update(Kalipso *kalipso, Player *player, float time_step);
+void kalipso_update(Kalipso *kalipso, Player *player, const Sound *sounds, float time_step);
 void kalipso_render(const Kalipso *kalipso);
 
 #endif // KALIPSO_H

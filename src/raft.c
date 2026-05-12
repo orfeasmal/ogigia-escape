@@ -12,7 +12,7 @@
 
 #define RAFT_TIME_REQUIRED_TO_DEPOSIT 3.0f
 
-Raft raft_create(uint32_t window_width, uint32_t window_height, Rectangle ocean)
+Raft raft_create(uint32_t window_height, Rectangle ocean)
 {
 	return (Raft) {
 		.body = {
@@ -34,16 +34,21 @@ Raft raft_create(uint32_t window_width, uint32_t window_height, Rectangle ocean)
 
 void raft_render(const Raft *r)
 {
+	int32_t plants_needed_to_be_built_total = r->plants_needed_to_be_built[PLANT_TREE] + r->plants_needed_to_be_built[PLANT_WEED];
+
 	Rectangle partial_raft_body = r->body;
 	partial_raft_body.width *= fmaxf(
 		0.0f, 
 		1.0f -
-		(float)(r->plants_needed_to_be_built[PLANT_TREE] + r->plants_needed_to_be_built[PLANT_WEED]) /
+		(float)plants_needed_to_be_built_total /
 		(RAFT_TREES_NEEDED_INITIAL + RAFT_WEEDS_NEEDED_INITIAL)
 	);
 
 	DrawRectangleLinesEx(r->body, 5.0f, r->color);
 	DrawRectangleRec(partial_raft_body, r->color);
+
+	if (plants_needed_to_be_built_total <= 0)
+		return;
 
 	const char *wood_str = TextFormat("Wood needed: %d", r->plants_needed_to_be_built[PLANT_TREE]);
 	DrawText(wood_str, r->body.x + r->body.width / 2.0f - MeasureText(wood_str, MATERIAL_REQUIREMENT_FONT_SIZE) / 2.0f, r->body.y - MATERIAL_REQUIREMENT_FONT_SIZE - 10, MATERIAL_REQUIREMENT_FONT_SIZE, BLACK);

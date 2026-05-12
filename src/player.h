@@ -13,6 +13,8 @@ typedef enum {
 	PLAYER_PICKING_PLANT,
 	PLAYER_DEPOSITING_TO_RAFT,
 	PLAYER_BEING_QUESTIONED,
+	PLAYER_ESCAPING,
+	PLAYER_ESCAPED
 } PlayerState;
 
 typedef struct {
@@ -40,7 +42,8 @@ void player_update(
 	uint32_t *plants_count,
 	Raft *raft,
 	Rectangle ocean,
-	Sound *sounds,
+	const Sound *sounds,
+	uint32_t window_width,
 	uint32_t window_height,
 	float time_step
 );
