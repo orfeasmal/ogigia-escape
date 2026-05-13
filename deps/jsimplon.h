@@ -14,22 +14,24 @@
 	this program. If not, see <https://www.gnu.org/licenses/>.
 */
 
+#ifndef JSIMPLON_H_
+#define JSIMPLON_H_
+
 #include <math.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <stdbool.h>
 
-#ifndef JSIMPLON_H_
-#define JSIMPLON_H_
+#ifdef __cplusplus
+extern "C" { 
+#endif
 
 #ifndef JSIMPLON_DEF
-
 #ifdef JSIMPLON_STATIC
 #define JSIMPLON_DEF static inline
 #else
 #define JSIMPLON_DEF extern
 #endif // JSIMPLON_STATIC 
-
 #endif // JSIMPLON_DEF
 
 typedef struct jsimplon_value Jsimplon_Value;
@@ -1489,6 +1491,8 @@ JSIMPLON_DEF_INTERNAL const char *jsimplon_token_to_str(Jsimplon_Token token)
 			return ",";
 		case JSIMPLON_TOKEN_COLON:
 			return ":";
+		default:
+			return "";
 	}
 }
 
@@ -1724,6 +1728,10 @@ jsimplon_file_write_defer:
 }
 
 #endif // JSIMPLON_IMPLEMENTATION
+
+#ifdef __cplusplus
+} // extern "C" {
+#endif
 
 #endif // JSIMPLON_H_
 
